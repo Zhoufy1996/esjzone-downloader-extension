@@ -1,0 +1,30 @@
+{
+  "name": "My Tools",
+  "description": "My Tools",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "extensionPanel.html",
+    "default_title": "My Tools"
+  },
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "./static/js/content.js"
+      ]
+    }
+  ],
+  "devtools_page": "devtools.html"
+}
