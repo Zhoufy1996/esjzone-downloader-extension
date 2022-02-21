@@ -22,7 +22,7 @@
         "https://*/*"
       ],
       "js": [
-        "./static/js/content.js"
+        "./static/js/background.bundle.js"
       ]
     }
   ],

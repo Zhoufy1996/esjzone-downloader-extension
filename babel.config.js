@@ -3,7 +3,9 @@ const babelConfig = (api) => {
     // 先插件后预设
 
     // 从后往前
-    const presets = ['@babel/preset-react', '@babel/preset-typescript'];
+    const presets = [['@babel/preset-react', {
+        "runtime": "automatic"
+    }], '@babel/preset-typescript'];
 
     // 从前往后
     const plugins = ['@babel/plugin-proposal-optional-chaining'];

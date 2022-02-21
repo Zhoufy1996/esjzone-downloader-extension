@@ -5,22 +5,7 @@ import path from 'path';
 
 const rules: webpack.RuleSetRule[] = [
   {
-    test: /\.(j|t)s(x?)$/,
-    use: [
-      {
-        loader: 'eslint-loader',
-        options: {
-          // fix: true,
-          emitError: true,
-          emitWarning: true,
-        },
-      },
-    ],
-    enforce: 'pre',
-    exclude: [path.join(process.cwd(), 'node_modules')],
-  },
-  {
-    test: /\.ts(x?)$/,
+    test: /\.[jt]s$/,
     use: [
       {
         loader: 'babel-loader',

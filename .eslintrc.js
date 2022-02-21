@@ -6,7 +6,8 @@ module.exports = {
     ],
     extends: [
         'airbnb',
-        'airbnb-typescript'
+        'airbnb-typescript',
+        'plugin:react/jsx-runtime'
     ],
     parserOptions: {
         project: './tsconfig.json'
@@ -19,5 +20,9 @@ module.exports = {
                 devDependencies: true,
             },
         ],
+        "react/function-component-definition": ["error", {
+            "namedComponents": ["function-declaration" , "function-expression" , "arrow-function"],
+            "unnamedComponents":  ["function-expression" , "arrow-function"]
+        }]
     }
 };
