@@ -1,11 +1,11 @@
 {
-  "name": "My Tools",
-  "description": "My Tools",
+  "name": "template",
+  "description": "template",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
     "default_popup": "extensionPanel.html",
-    "default_title": "My Tools"
+    "default_title": "template"
   },
   "icons": {
     "16": "logo192.png",

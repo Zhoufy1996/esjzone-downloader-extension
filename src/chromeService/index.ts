@@ -4,7 +4,9 @@ const MessageReactAppListener = (
   sender: chrome.runtime.MessageSender,
   sendResponse: (response: any) => void,
 ) => {
-  console.log(msg);
+  console.log('msg: ', msg);
+  sendResponse('return');
+  return true;
 };
 
 chrome.runtime.onMessage.addListener(MessageReactAppListener);
