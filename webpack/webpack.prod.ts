@@ -2,15 +2,23 @@ import webpack from 'webpack';
 import merge from 'webpack-merge';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 import commonConfig from './webpack.common';
 
 const devConfig: webpack.Configuration = merge(commonConfig, {
   entry: {
-    extensionPanel: path.join(__dirname, '../src/extensionPanel/index.tsx'),
-    devtoolsPanel: path.join(__dirname, '../src/devtoolsPanel/index.tsx'),
+    extensionPanel: {
+      import: path.join(__dirname, '../src/extensionPanel/index.tsx'),
+      dependOn: 'shared',
+    },
+    devtoolsPanel: {
+      import: path.join(__dirname, '../src/devtoolsPanel/index.tsx'),
+      dependOn: 'shared',
+    },
     background: path.join(__dirname, '../src/chromeService/index.ts'),
+    shared: ['react', 'react-dom'],
   },
   output: {
     filename: 'static/js/[name].bundle.js',
@@ -34,6 +42,22 @@ const devConfig: webpack.Configuration = merge(commonConfig, {
     ],
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '../public/extensionPanel.html'),
+      title: 'extensionPanel',
+      favicon: path.join(__dirname, '../public/favicon.ico'),
+      filename: 'extensionPanel.html',
+      minify: true,
+      chunks: ['shared', 'extensionPanel'],
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '../public/devtoolsPanel.html'),
+      title: 'devtoolsPanel',
+      favicon: path.join(__dirname, '../public/favicon.ico'),
+      filename: 'devtoolsPanel.html',
+      minify: true,
+      chunks: ['shared', 'devtoolsPanel'],
+    }),
     new ReactRefreshWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [

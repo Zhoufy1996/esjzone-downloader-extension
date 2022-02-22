@@ -2,6 +2,7 @@ import webpack from 'webpack';
 import merge from 'webpack-merge';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import 'webpack-dev-server';
 
 import commonConfig from './webpack.common';
@@ -34,7 +35,24 @@ const devConfig: webpack.Configuration = merge(commonConfig, {
       },
     ],
   },
-  plugins: [new ReactRefreshWebpackPlugin()],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '../public/extensionPanel.html'),
+      title: 'extensionPanel',
+      favicon: path.join(__dirname, '../public/favicon.ico'),
+      filename: 'extensionPanel.html',
+      minify: true,
+      chunks: ['extensionPanel'],
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '../public/devtoolsPanel.html'),
+      title: 'devtoolsPanel',
+      favicon: path.join(__dirname, '../public/favicon.ico'),
+      filename: 'devtoolsPanel.html',
+      minify: true,
+      chunks: ['devtoolsPanel'],
+    }),
+    new ReactRefreshWebpackPlugin()],
 });
 
 export default devConfig;
