@@ -1,5 +1,10 @@
+import Container from '../conponents/Conntainer';
+import Editor from '../conponents/Editor';
+
 const App = () => (
-  <div>content</div>
+  <Container>
+    <Editor />
+  </Container>
 );
 
 export default App;

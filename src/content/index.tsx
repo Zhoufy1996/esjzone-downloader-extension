@@ -7,7 +7,6 @@ import './index.css';
 const getContentParentDomOrCreate = () => {
   let parentDom = document.getElementById('extension-parent-node');
   if (!parentDom) {
-    console.log('create');
     parentDom = document.createElement('div');
     parentDom.id = 'extension-parent-node';
     document.body.appendChild(parentDom);
@@ -16,7 +15,6 @@ const getContentParentDomOrCreate = () => {
 };
 
 const render = () => {
-  console.log('render');
   ReactDom.render(<App />, document.getElementById('extension-parent-node'));
 };
 

@@ -11,8 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "ahooks": "^3.1.9",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-quill": "^2.0.0-beta.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.3",

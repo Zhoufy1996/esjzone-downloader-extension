@@ -25,6 +25,9 @@
         "./static/js/shared.bundle.js",
         "./static/js/content.bundle.js"
       ],
+      "css": [
+        "./static/css/content.css"
+      ],
       "run_at": "document_idle"
     }
   ],

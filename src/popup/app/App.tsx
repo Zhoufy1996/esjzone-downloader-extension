@@ -1,24 +1,7 @@
-const consoleRes = (response:string) => {
-  console.log('res: ', response);
-};
+import TextRender from '../component/TextRender';
+
 const App = () => (
-  <button
-    onClick={() => {
-      chrome.tabs.query({
-        active: true,
-        currentWindow: true,
-      }, (tabs) => {
-        chrome.tabs.sendMessage(
-          tabs[0].id || 0,
-          'ping',
-          consoleRes,
-        );
-      });
-    }}
-    type="button"
-  >
-    ping
-  </button>
+  <TextRender />
 );
 
 export default App;
