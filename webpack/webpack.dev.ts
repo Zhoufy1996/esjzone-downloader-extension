@@ -9,9 +9,10 @@ import commonConfig from './webpack.common';
 
 const devConfig: webpack.Configuration = merge(commonConfig, {
   entry: {
-    extensionPanel: path.join(__dirname, '../src/extensionPanel/index.tsx'),
+    content: path.join(__dirname, '../src/content/index.tsx'),
+    background: path.join(__dirname, '../src/background/index.ts'),
+    popup: path.join(__dirname, '../src/popup/index.tsx'),
     devtoolsPanel: path.join(__dirname, '../src/devtoolsPanel/index.tsx'),
-    background: path.join(__dirname, '../src/chromeService/index.ts'),
   },
   mode: 'development',
   devtool: 'source-map',
@@ -37,12 +38,12 @@ const devConfig: webpack.Configuration = merge(commonConfig, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../public/extensionPanel.html'),
-      title: 'extensionPanel',
+      template: path.join(__dirname, '../public/popup.html'),
+      title: 'popup',
       favicon: path.join(__dirname, '../public/favicon.ico'),
-      filename: 'extensionPanel.html',
+      filename: 'popup.html',
       minify: true,
-      chunks: ['extensionPanel'],
+      chunks: ['popup'],
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '../public/devtoolsPanel.html'),
@@ -51,6 +52,14 @@ const devConfig: webpack.Configuration = merge(commonConfig, {
       filename: 'devtoolsPanel.html',
       minify: true,
       chunks: ['devtoolsPanel'],
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '../public/content.html'),
+      title: 'content',
+      favicon: path.join(__dirname, '../public/favicon.ico'),
+      filename: 'content.html',
+      minify: true,
+      chunks: ['content'],
     }),
     new ReactRefreshWebpackPlugin()],
 });

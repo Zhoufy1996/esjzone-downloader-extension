@@ -4,13 +4,13 @@
   "version": "1.0",
   "manifest_version": 3,
   "action": {
-    "default_popup": "extensionPanel.html",
+    "default_popup": "popup.html",
     "default_title": "template"
   },
   "icons": {
     "16": "logo192.png",
     "48": "logo192.png",
-    "128": "logo192.png"
+    "128": "logo512.png"
   },
   "permissions": [
     "activeTab"
@@ -22,9 +22,14 @@
         "https://*/*"
       ],
       "js": [
-        "./static/js/background.bundle.js"
-      ]
+        "./static/js/shared.bundle.js",
+        "./static/js/content.bundle.js"
+      ],
+      "run_at": "document_idle"
     }
   ],
+  "background": {
+    "service_worker": "./static/js/background.bundle.js"
+  },
   "devtools_page": "devtools.html"
 }

@@ -9,15 +9,19 @@ import commonConfig from './webpack.common';
 
 const devConfig: webpack.Configuration = merge(commonConfig, {
   entry: {
-    extensionPanel: {
-      import: path.join(__dirname, '../src/extensionPanel/index.tsx'),
+    content: {
+      import: path.join(__dirname, '../src/content/index.tsx'),
+      dependOn: 'shared',
+    },
+    background: path.join(__dirname, '../src/background/index.ts'),
+    popup: {
+      import: path.join(__dirname, '../src/popup/index.tsx'),
       dependOn: 'shared',
     },
     devtoolsPanel: {
       import: path.join(__dirname, '../src/devtoolsPanel/index.tsx'),
       dependOn: 'shared',
     },
-    background: path.join(__dirname, '../src/chromeService/index.ts'),
     shared: ['react', 'react-dom'],
   },
   output: {
@@ -43,12 +47,12 @@ const devConfig: webpack.Configuration = merge(commonConfig, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../public/extensionPanel.html'),
-      title: 'extensionPanel',
+      template: path.join(__dirname, '../public/popup.html'),
+      title: 'popup',
       favicon: path.join(__dirname, '../public/favicon.ico'),
-      filename: 'extensionPanel.html',
+      filename: 'popup.html',
       minify: true,
-      chunks: ['shared', 'extensionPanel'],
+      chunks: ['shared', 'popup'],
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '../public/devtoolsPanel.html'),
