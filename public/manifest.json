@@ -1,38 +1,27 @@
 {
-  "name": "template",
-  "description": "template",
-  "version": "1.0",
-  "manifest_version": 3,
-  "action": {
-    "default_popup": "popup.html",
-    "default_title": "template"
-  },
-  "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo512.png"
-  },
-  "permissions": [
-    "activeTab"
-  ],
-  "content_scripts": [
-    {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "js": [
-        "./static/js/shared.bundle.js",
-        "./static/js/content.bundle.js"
-      ],
-      "css": [
-        "./static/css/content.css"
-      ],
-      "run_at": "document_idle"
+    "name": "template",
+    "description": "template",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "template"
+    },
+    "icons": {
+        "16": "logo192.png",
+        "48": "logo192.png",
+        "128": "logo512.png"
+    },
+    "permissions": ["activeTab"],
+    "content_scripts": [
+        {
+            "matches": ["https://www.esjzone.cc/*"],
+            "js": ["./static/js/content.bundle.js"],
+
+            "run_at": "document_idle"
+        }
+    ],
+    "background": {
+        "service_worker": "./static/js/background.bundle.js"
     }
-  ],
-  "background": {
-    "service_worker": "./static/js/background.bundle.js"
-  },
-  "devtools_page": "devtools.html"
 }
