@@ -1,6 +1,4 @@
-import { EditorMessage } from '../types';
-
-console.log('it workds');
+import { Message } from '../types';
 
 const store = {
   value: '',
@@ -14,19 +12,18 @@ const store = {
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const backgroundListener = (
-  msg: EditorMessage,
+  msg: Message,
   sender: chrome.runtime.MessageSender,
   sendResponse: (response: any) => void,
 ) => {
   if (msg.type === 'CHANGE_DATA') {
     store.setValue(msg.value);
-    console.log(msg.value, store.getValue());
+    sendResponse(store.getValue());
+  }
+
+  if (msg.type === 'GET_DATA') {
     sendResponse(store.getValue());
   }
 };
 
 chrome.runtime.onMessage.addListener(backgroundListener);
-
-function getValue() {
-  return store.getValue();
-}

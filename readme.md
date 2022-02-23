@@ -43,7 +43,7 @@ chrome.runtime.sendMessage(message, function () {
 
   ```
   // 两者运行在同一上下文中，因此之啊哟得到对方的window对象，即可随意调用
-
+  // v3中无法使用 可以使用与content/background相同的方式通信
   const getPopUpView = () => chrome.extension.getViews({ type: 'popup' })[0];
 
   export const getBackground = () => chrome.extension.getBackgroundPage();
@@ -59,3 +59,7 @@ chrome.runtime.sendMessage(message, function () {
 4. contextMenus
 5. options
 6. notifications
+
+问题
+
+1. 打包的时候 background会被打包到一个立即执行函数里，导致chrome.runtime.getBackgroundPage获取不到background的全局对象

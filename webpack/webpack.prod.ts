@@ -13,7 +13,9 @@ const devConfig: webpack.Configuration = merge(commonConfig, {
       import: path.join(__dirname, '../src/content/index.tsx'),
       dependOn: 'shared',
     },
-    background: path.join(__dirname, '../src/background/index.ts'),
+    background: {
+      import: path.join(__dirname, '../src/background/index.ts'),
+    },
     popup: {
       import: path.join(__dirname, '../src/popup/index.tsx'),
       dependOn: 'shared',

@@ -2,14 +2,15 @@ import { useInterval } from 'ahooks';
 import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { getBackground } from '../utils';
+import { EditorGetMessage } from '../../types';
 
 const TextRender = () => {
   const [state, setState] = useState<string>('');
 
   useInterval(() => {
-    getBackground().then((bg) => {
-      setState(bg.getValue());
+    chrome.runtime.sendMessage<EditorGetMessage>({ type: 'GET_DATA' }, (message:string) => {
+      console.log(`【获取成功】 ${message}`);
+      setState(message);
     });
   }, 1000);
 
