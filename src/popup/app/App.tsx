@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import DownloadButton from './DownloadButton';
+import DownloadMessage from './DownloadMessage';
 
 const App = () => {
   interface State {
@@ -28,9 +29,21 @@ const App = () => {
   const { status } = state;
   return (
     <div>
-      {status === 'checking' && <Typography>判断能否下载中</Typography>}
-      {status === 'invalid' && <Typography>无法下载</Typography>}
-      {status === 'valid' && <DownloadButton />}
+      {useMemo(() => {
+        if (status === 'checking') {
+          return <Typography>判断能否下载中</Typography>;
+        }
+        if (status === 'invalid') {
+          return <Typography>无法下载</Typography>;
+        }
+
+        return (
+          <div>
+            <DownloadButton />
+            <DownloadMessage />
+          </div>
+        );
+      }, [status])}
     </div>
   );
 };
