@@ -1,4 +1,7 @@
-esjzone小说下载插件
+popup 发送下载命令到content_script
 
 
-流程
+content_script执行脚本并将log发送给background
+
+
+popup从background取log展示

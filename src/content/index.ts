@@ -1,71 +1,70 @@
-import { saveAs } from 'file-saver';
-import { getChapterList, getIntro, getTitle } from './utils';
-
-const getDocument = async (url: string) => {
-    const response = await fetch(url);
-    const body = await response.text();
-
-    const domparser = new DOMParser();
-
-    const doc = domparser.parseFromString(body, 'text/html');
-    return doc;
-};
-
-const getDocumentNovelContent = (doc: Document) => {
-    const content = (doc.querySelector('.forum-content') as HTMLElement)?.innerText;
-    // console.log(parentNode);
-    // if (parentNode?.children) {
-    //     const content = Array.from(parentNode.children)
-    //         .map((node) => {
-    //             const text = Array.from(node.querySelectorAll('span'))
-    //                 .map((childNode) => childNode.textContent)
-    //                 .join('');
-    //             return text;
-    //         })
-    //         .join('');
-    //     return content;
-    // }
-
-    return content || '';
-};
-
-const getNovelContentByUrl = async (url: string) => {
-    if (url === '') {
-        return '';
-    }
-    const doc = await getDocument(url);
-    const content = getDocumentNovelContent(doc);
-
-    return content;
-};
-
-const fileSave = (text: string, title: string) => {
-    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-    saveAs(blob, `${title}.txt`);
-};
+import { SendLogMessage } from '../types/backgroundMessage';
+import Scheduler from './scheduler';
+import { getChapterList, getIntro, getTitle, getNovelContentByUrl, fileSave } from './utils';
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    const title = getTitle();
-    const intro = getIntro();
-    const chapterList = getChapterList();
-    const getContent = async () => {
-        const contents = await Promise.all(
-            chapterList.map((item) => {
-                return getNovelContentByUrl(item.url || '');
-            })
-        );
-        const text = `${title}\n${intro}\n\n${contents
-            .map((content, index) => {
-                return `${chapterList[index].title}\n${content}`;
-            })
-            .join('\n\n')}`;
-        fileSave(text, title as string);
-        sendResponse({
-            title,
-            intro,
-            chapterList,
-            contents,
-        });
-    };
-    getContent();
+  chrome.runtime.sendMessage<SendLogMessage>({
+    type: 'SEND_LOG_MESSAGE',
+    message: '正在解析页面信息...',
+  });
+
+  const title = getTitle();
+  const intro = getIntro();
+  const chapterList = getChapterList();
+
+  chrome.runtime.sendMessage<SendLogMessage>({
+    type: 'SEND_LOG_MESSAGE',
+    message: '页面信息解析成功...',
+  });
+
+  chrome.runtime.sendMessage<SendLogMessage>({
+    type: 'SEND_LOG_MESSAGE',
+    message: '正在获取章节内容...',
+  });
+
+  const getContent = () => {
+    const childChapterList = chapterList.filter((item) => item.url != null);
+
+    const scheduler = new Scheduler(
+      childChapterList.map((item) => {
+        return () => getNovelContentByUrl(item.url as string);
+      }),
+      {
+        maxCount: 50,
+        tryCount: 1,
+      }
+    );
+
+    const timerId = setInterval(() => {
+      chrome.runtime.sendMessage<SendLogMessage>({
+        type: 'SEND_LOG_MESSAGE',
+        message: `进度：【${scheduler.getResult().length}/${childChapterList.length}】`,
+      });
+    }, 1000);
+
+    scheduler.execute().then((contents) => {
+      clearInterval(timerId);
+
+      const text = `${title}\n${intro}\n\n${contents
+        .map((content, index) => {
+          return `${chapterList[index].title}\n${content}`;
+        })
+        .join('\n\n')}`;
+
+      fileSave(text, title as string);
+
+      chrome.runtime.sendMessage<SendLogMessage>({
+        type: 'SEND_LOG_MESSAGE',
+        message: `下载结束`,
+      });
+
+      sendResponse({
+        title,
+        intro,
+        chapterList,
+        contents,
+      });
+    });
+  };
+  getContent();
 });

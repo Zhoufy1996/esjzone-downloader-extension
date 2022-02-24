@@ -1,11 +1,11 @@
 {
-    "name": "template",
-    "description": "template",
-    "version": "1.0",
+    "name": "esjzone小说下载器",
+    "description": "轻松下载esjzone小说至本地",
+    "version": "0.0.1",
     "manifest_version": 3,
     "action": {
         "default_popup": "popup.html",
-        "default_title": "template"
+        "default_title": "esjzone-downloader"
     },
     "icons": {
         "16": "logo192.png",
