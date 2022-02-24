@@ -1,5 +1,7 @@
 import { Typography } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
+import { CheckValidMessage } from '../../types/contentMessage';
+import { getCurrentActiveTabId } from '../utils';
 import DownloadButton from './DownloadButton';
 import DownloadMessage from './DownloadMessage';
 
@@ -13,17 +15,19 @@ const App = () => {
   });
 
   useEffect(() => {
-    const currentUrl = window.location.href;
+    const asyncFunc = async () => {
+      chrome.tabs.sendMessage<CheckValidMessage>(
+        await getCurrentActiveTabId(),
+        { type: 'URL_CHECK_VALID' },
+        (res: boolean) => {
+          setState({
+            status: res ? 'valid' : 'invalid',
+          });
+        }
+      );
+    };
 
-    if (currentUrl.startsWith('https://www.esjzone.cc/')) {
-      setState({
-        status: 'valid',
-      });
-    } else {
-      setState({
-        status: 'invalid',
-      });
-    }
+    asyncFunc();
   }, []);
 
   const { status } = state;

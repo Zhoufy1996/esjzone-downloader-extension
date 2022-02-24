@@ -1,5 +1,5 @@
 import { BackgroundMessage } from '../types/backgroundMessage';
-import Log from './Log';
+import Log from './log';
 
 const log = new Log();
 
