@@ -12,4 +12,18 @@ export const getCurrentActiveTabId = () => {
   });
 };
 
+export const sendMessageToCurrentActiveContent = <T, U>(msg: T): Promise<U> => {
+  return new Promise((resolve, reject) => {
+    getCurrentActiveTabId()
+      .then((tabId) => {
+        chrome.tabs.sendMessage<T>(tabId, msg, (res: U) => {
+          resolve(res);
+        });
+      })
+      .catch((error: Error) => {
+        reject(error);
+      });
+  });
+};
+
 export default {};

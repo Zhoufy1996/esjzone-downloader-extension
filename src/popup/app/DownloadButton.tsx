@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import { useCallback, useState } from 'react';
 import { DownloadMessage } from '../../types/contentMessage';
 import { CleanLogMessage } from '../../types/backgroundMessage';
-import { getCurrentActiveTabId } from '../utils';
+import { sendMessageToCurrentActiveContent } from '../utils';
 
 const DownloadButton = () => {
   const [state, setState] = useState({
@@ -16,7 +16,8 @@ const DownloadButton = () => {
     chrome.runtime.sendMessage<CleanLogMessage>({
       type: 'CLEAN_LOG_MESSAGE',
     });
-    chrome.tabs.sendMessage<DownloadMessage>(await getCurrentActiveTabId(), { type: 'DOWNLOAD_NOVEL' }, () => {
+
+    sendMessageToCurrentActiveContent<DownloadMessage, void>({ type: 'DOWNLOAD_NOVEL' }).then(() => {
       setState({
         isLoading: false,
       });

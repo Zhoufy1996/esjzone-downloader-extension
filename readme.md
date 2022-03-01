@@ -1,7 +1,1 @@
-popup 发送下载命令到content_script
 
-
-content_script执行脚本并将log发送给background
-
-
-popup从background取log展示

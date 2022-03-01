@@ -1,6 +1,16 @@
 body {
-  width: 600px;
-  height: 400px;
+  width: 300px;
+  height: 200px;
   display: flex;
   overflow: hidden;
+}
+
+#root {
+  flex: 1;
+  display: flex;
+}
+
+.app {
+  flex: 1;
+  overflow: auto;
 }

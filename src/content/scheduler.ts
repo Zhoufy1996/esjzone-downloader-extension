@@ -8,7 +8,7 @@ interface SchedulerItem<T> {
 
 interface SchedulerOptions {
   maxCount: number;
-  tryCount: number;
+  maxTryCount: number;
 }
 
 class Scheduler<T> {
@@ -18,11 +18,11 @@ class Scheduler<T> {
 
   private maxCount: number = 10;
 
-  private tryCount: number = 1;
+  private maxTryCount: number = 1;
 
-  constructor(values: (() => Promise<T>)[], { maxCount = 10, tryCount = 1 }: SchedulerOptions) {
+  constructor(values: (() => Promise<T>)[], { maxCount = 10, maxTryCount = 1 }: SchedulerOptions) {
     this.maxCount = maxCount;
-    this.tryCount = tryCount;
+    this.maxTryCount = maxTryCount;
 
     this.tempObj = Object.fromEntries(
       values.map((func, index) => {
@@ -41,10 +41,10 @@ class Scheduler<T> {
   }
 
   getNextExecuteList() {
-    const { tempObj, tryCount, maxCount } = this;
+    const { tempObj, maxTryCount, maxCount } = this;
     return Object.values(tempObj)
       .filter((item) => {
-        return !item.isResolve && item.tryCount <= tryCount;
+        return !item.isResolve && item.tryCount <= maxTryCount;
       })
       .slice(0, maxCount);
   }
@@ -68,13 +68,12 @@ class Scheduler<T> {
   }
 
   async execute() {
-    const { tempObj, executeItem } = this;
     return new Promise<T[]>((resolve) => {
       const executeNextList = async () => {
         const nextList = this.getNextExecuteList();
         if (nextList.length === 0) {
           resolve(
-            Object.values(tempObj)
+            Object.values(this.tempObj)
               .sort((left, right) => {
                 return left.index - right.index;
               })
@@ -84,7 +83,8 @@ class Scheduler<T> {
           );
         } else {
           try {
-            await Promise.allSettled(nextList.map((item) => executeItem(item)));
+            const nextListPromise = nextList.map((item) => this.executeItem(item));
+            await Promise.allSettled(nextListPromise);
           } finally {
             executeNextList();
           }

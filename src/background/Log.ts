@@ -2,7 +2,7 @@ class Log {
   messages: string[] = [];
 
   addLog(message: string) {
-    this.messages.push(`【${new Date().toUTCString}】: ${message}`);
+    this.messages.push(`【${new Date().toUTCString()}】: ${message}`);
   }
 
   getLog() {
