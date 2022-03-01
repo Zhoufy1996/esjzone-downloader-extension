@@ -9,6 +9,6 @@ chrome.runtime.onMessage.addListener((msg: ContentMessage, sender, sendResponse)
   }
 
   if (msg.type === 'URL_CHECK_VALID') {
-    sendResponse(window.location.href.startsWith('https://www.esjzone.cc/'));
+    sendResponse(window.location.href.startsWith('https://www.esjzone.cc/detail'));
   }
 });

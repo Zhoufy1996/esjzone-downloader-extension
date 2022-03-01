@@ -1,12 +1,13 @@
 {
   "name": "template",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "esjzone-downloader-chrome-extension",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node webpack/devServer.ts",
-    "build": "webpack --config ./webpack/webpack.prod.ts"
+    "build": "webpack --config ./webpack/webpack.prod.ts",
+    "zip": "node compressing.js"
   },
   "author": "",
   "license": "ISC",
@@ -36,6 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "babel-loader": "^8.2.3",
+    "compressing": "^1.5.1",
     "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.6.0",
     "eslint": "^8.2.0",

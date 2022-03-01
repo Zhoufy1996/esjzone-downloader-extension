@@ -6,7 +6,7 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
   },
-  ignorePatterns: ['.eslintrc.js', 'babel.config.js'],
+  ignorePatterns: ['.eslintrc.js', 'babel.config.js', "compressing.js"],
   rules: {
     'import/no-extraneous-dependencies': [
       'error',
