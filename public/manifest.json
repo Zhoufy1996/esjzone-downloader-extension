@@ -3,16 +3,16 @@
     "description": "轻松下载esjzone小说至本地",
     "version": "0.0.1",
     "manifest_version": 3,
-    "action": {
-        "default_popup": "popup.html",
-        "default_title": "esjzone-downloader"
-    },
     "icons": {
         "16": "logo192.png",
         "48": "logo192.png",
         "128": "logo512.png"
     },
-    "permissions": ["activeTab"],
+    "permissions": ["activeTab", "contextMenus"],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "esjzone-downloader"
+    },
     "content_scripts": [
         {
             "matches": ["https://www.esjzone.cc/*"],

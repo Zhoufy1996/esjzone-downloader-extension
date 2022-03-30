@@ -1,4 +1,7 @@
+import { sendMessageToCurrentActiveContent } from '../popup/utils';
 import { BackgroundMessage } from '../types/backgroundMessage';
+import { DownloadMessage } from '../types/contentMessage';
+import { documentUrlPattern } from '../utils';
 import Log from './log';
 
 const log = new Log();
@@ -23,4 +26,18 @@ chrome.runtime.onMessage.addListener((msg: BackgroundMessage, sender, sendRespon
   }
 
   sendResponse(false);
+});
+
+chrome.contextMenus.create({
+  id: 'download-esjzone',
+  type: 'normal',
+  title: 'esjzone当前页面小说下载',
+  contexts: ['page'],
+  documentUrlPatterns: [documentUrlPattern],
+});
+
+chrome.contextMenus.onClicked.addListener((info) => {
+  if (info.menuItemId === 'download-esjzone') {
+    sendMessageToCurrentActiveContent<DownloadMessage, void>({ type: 'DOWNLOAD_NOVEL' });
+  }
 });

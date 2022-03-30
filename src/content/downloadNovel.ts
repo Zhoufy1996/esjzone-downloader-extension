@@ -110,7 +110,7 @@ const downloadNovel = () => {
         return () => getNovelContentByUrl((item.url as string) || '');
       }),
       {
-        maxCount: 50,
+        maxCount: 5,
         maxTryCount: 1,
       }
     );

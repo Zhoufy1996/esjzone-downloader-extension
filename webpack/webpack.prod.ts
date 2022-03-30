@@ -1,6 +1,5 @@
 import webpack from 'webpack';
 import merge from 'webpack-merge';
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -51,7 +50,6 @@ const devConfig: webpack.Configuration = merge(commonConfig, {
       minify: true,
       chunks: ['shared', 'popup'],
     }),
-    new ReactRefreshWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
         {

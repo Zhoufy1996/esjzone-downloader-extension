@@ -1,4 +1,5 @@
 import { ContentMessage } from '../types/contentMessage';
+import { documentUrlPattern } from '../utils';
 import downloadNovel from './downloadNovel';
 
 chrome.runtime.onMessage.addListener((msg: ContentMessage, sender, sendResponse) => {
@@ -9,6 +10,6 @@ chrome.runtime.onMessage.addListener((msg: ContentMessage, sender, sendResponse)
   }
 
   if (msg.type === 'URL_CHECK_VALID') {
-    sendResponse(window.location.href.startsWith('https://www.esjzone.cc/detail'));
+    sendResponse(window.location.href.match(documentUrlPattern) != null);
   }
 });
