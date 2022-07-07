@@ -1,7 +1,6 @@
-import { sendMessageToCurrentActiveContent } from '../popup/utils';
+import { sendMessageToCurrentActiveContent, documentUrlPattern } from '../utils';
 import { BackgroundMessage } from '../types/backgroundMessage';
 import { DownloadMessage } from '../types/contentMessage';
-import { documentUrlPattern } from '../utils';
 import Log from './log';
 
 const log = new Log();

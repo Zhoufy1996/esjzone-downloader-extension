@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { CheckValidMessage } from '../../types/contentMessage';
-import { sendMessageToCurrentActiveContent } from '../utils';
+import { sendMessageToCurrentActiveContent } from '../../utils';
 import DownloadButton from './DownloadButton';
 import DownloadMessage from './DownloadMessage';
 

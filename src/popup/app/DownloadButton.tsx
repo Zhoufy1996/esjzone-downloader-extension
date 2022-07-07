@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import { useCallback, useState } from 'react';
 import { DownloadMessage } from '../../types/contentMessage';
 import { CleanLogMessage } from '../../types/backgroundMessage';
-import { sendMessageToCurrentActiveContent } from '../utils';
+import { sendMessageToCurrentActiveContent } from '../../utils';
 
 const DownloadButton = () => {
   const [state, setState] = useState({
