@@ -15,7 +15,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://www.esjzone.net/*"],
+            "matches": ["https://www.esjzone.cc/*"],
             "js": ["./static/js/content.bundle.js"],
 
             "run_at": "document_idle"
