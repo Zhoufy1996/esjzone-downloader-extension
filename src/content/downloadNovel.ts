@@ -4,12 +4,12 @@ import Scheduler from './scheduler';
 
 // 获取小说标题
 const getTitle = () => {
-  return document.querySelector('.text-normal')?.textContent;
+  return document.querySelector('h2')?.textContent;
 };
 
 // 获取小说简介
 const getIntro = () => {
-  return document.querySelector('.bg-secondary')?.textContent;
+  return document.querySelector('#details')?.textContent;
 };
 
 interface Chapter {
