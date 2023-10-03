@@ -15,6 +15,7 @@ const getIntro = (): any => {
 // 获取小说元数据
 const getMeta = (): string => {
   const metalist: string[] = [];
+
   document.querySelectorAll('.list-unstyled li:not(.hidden-md-up)').forEach((node) => {
     metalist.push(node.textContent || '');
   });
