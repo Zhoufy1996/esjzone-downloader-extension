@@ -32,7 +32,7 @@ chrome.contextMenus.create({
   type: 'normal',
   title: 'esjzone 当前页面小说下载',
   contexts: ['page'],
-  documentUrlPatterns: [documentUrlPattern],
+  documentUrlPatterns: [documentUrlPattern.toString()],
 });
 
 chrome.contextMenus.onClicked.addListener((info) => {
