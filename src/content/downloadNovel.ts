@@ -3,13 +3,22 @@ import { SendLogMessage } from '../types/backgroundMessage';
 import Scheduler from './scheduler';
 
 // 获取小说标题
-const getTitle = () => {
+const getTitle = (): any => {
   return document.querySelector('h2')?.textContent;
 };
 
 // 获取小说简介
-const getIntro = () => {
+const getIntro = (): any => {
   return document.querySelector('#details')?.textContent;
+};
+
+// 获取小说元数据
+const getMeta = (): string => {
+  const metalist: string[] = [];
+  document.querySelectorAll('.list-unstyled li:not(.hidden-md-up)').forEach((node) => {
+    metalist.push(node.textContent || '');
+  });
+  return metalist.join('\n');
 };
 
 interface Chapter {
@@ -18,7 +27,7 @@ interface Chapter {
 }
 
 // 获取所有章节名和阅读链接
-const getChapterList = () => {
+const getChapterList = (): any => {
   const chapterListNode = document.querySelector('#chapterList');
   const childNodes = chapterListNode?.children;
   if (childNodes) {
@@ -48,7 +57,7 @@ const getChapterList = () => {
   return [];
 };
 
-// get方法请求地址，将内容转换成document
+// get 方法请求地址，将内容转换成 document
 const getDocument = async (url: string) => {
   const response = await fetch(url);
   const body = await response.text();
@@ -92,6 +101,7 @@ const downloadNovel = () => {
 
     const title = getTitle();
     const intro = getIntro();
+    const meta = getMeta();
     const chapterList = getChapterList();
 
     chrome.runtime.sendMessage<SendLogMessage>({
@@ -125,7 +135,7 @@ const downloadNovel = () => {
     scheduler.execute().then((contents) => {
       clearInterval(timerId);
 
-      const text = `${title}\n${intro}\n\n${contents
+      const text = `${title}\n\n${meta}\n${intro}\n\n${contents
         .map((content, index) => {
           return `${chapterList[index].title}\n${content}`;
         })
@@ -140,6 +150,7 @@ const downloadNovel = () => {
 
       resolve({
         title,
+        meta,
         intro,
         chapterList,
         contents,
