@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-/** 处理js ts */
+/** 处理 js, ts */
 
 const rules: webpack.RuleSetRule[] = [
   {
