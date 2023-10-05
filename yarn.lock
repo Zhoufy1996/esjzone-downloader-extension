@@ -3384,7 +3384,7 @@ find-up@^5.0.0:
 
 flashtext.js@^1.0.5:
   version "1.0.5"
-  resolved "https://registry.npmmirror.com/flashtext.js/-/flashtext.js-1.0.5.tgz"
+  resolved "https://registry.npmjs.org/flashtext.js/-/flashtext.js-1.0.5.tgz"
   integrity sha512-CKJ81wwqTQRawc+t7V1sirUssb9/I9n461cOxTqqPq/nrmeVNtwyeOp7pU85DtuSDmfMepQrF3zvXGxd5a5DVQ==
 
 flat-cache@^3.0.4:

@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 // 转换字库来自 https://github.com/foru17/chinese-s2t
 
+import { KeywordProcessor } from 'flashtext.js';
+
 class Convert {
   TS: Record<string, string> = {
     "萬": "万",
@@ -1186,7 +1188,7 @@ class Convert {
     "綞": "缍",
     "緞": "缎",
     "緶": "缏",
-    "線": "缐",
+    // "線": "缐",
     "緱": "缑",
     "縋": "缒",
     "緩": "缓",
@@ -1983,7 +1985,7 @@ class Convert {
     "鍔": "锷",
     "鍤": "锸",
     "鍬": "锹",
-    "鍾": "锺",
+    // "鍾": "锺",
     "鍛": "锻",
     "鎪": "锼",
     "鍠": "锽",
@@ -2226,7 +2228,7 @@ class Convert {
     "餑": "饽",
     "餖": "饾",
     "餓": "饿",
-    "餘": "馀",
+    // "餘": "馀",
     "餒": "馁",
     "餕": "馂",
     "餜": "馃",
@@ -2371,7 +2373,7 @@ class Convert {
     "鯧": "鲳",
     "鯝": "鲴",
     "鯢": "鲵",
-    "鮎": "鲶",
+    // "鮎": "鲶",
     "鯛": "鲷",
     "鯨": "鲸",
     "鰺": "鲹",
@@ -2537,29 +2539,36 @@ class Convert {
     "龜": "龟",
     "志": "志",
     "制": "制",
-    "諮": "咨",
+    // "諮": "咨",
     "只": "只",
-    "裏": "里",
+    // "裏": "里",
     "系": "系",
     "範": "范",
     "鬆": "松",
-    "沒": "没",
+    // "沒": "没",
     "嚐": "尝",
-    "嚐": "尝",
-    "鬧": "闹",
+    // "嚐": "尝",
+    // "鬧": "闹",
     "面": "面",
     "準": "准",
-    "鍾": "钟",
-    "別": "别",
-    "閒": "闲",
+    // "鍾": "钟",
+    // "別": "别",
+    // "閒": "闲",
     "乾": "乾",
-    "盡": "尽",
-    "髒": "脏",
+    // "盡": "尽",
+    // "髒": "脏",
     "拼": "拼",
   };
 
-  convert(text: string): any {
+  processor = new KeywordProcessor();
 
+  convert(text: string): string {
+    const { TS, processor } = this;
+    Object.entries(TS).forEach(([key, value]) => {
+      processor.addKeyword(key, value);
+    });
+    return processor.process(text);
+  }
 };
 
 export default Convert;
