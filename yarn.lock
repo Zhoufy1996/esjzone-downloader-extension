@@ -3382,6 +3382,11 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
+flashtext.js@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmmirror.com/flashtext.js/-/flashtext.js-1.0.5.tgz"
+  integrity sha512-CKJ81wwqTQRawc+t7V1sirUssb9/I9n461cOxTqqPq/nrmeVNtwyeOp7pU85DtuSDmfMepQrF3zvXGxd5a5DVQ==
+
 flat-cache@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmmirror.com/flat-cache/-/flat-cache-3.0.4.tgz"

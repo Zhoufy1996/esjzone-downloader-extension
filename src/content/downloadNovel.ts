@@ -1,6 +1,7 @@
 import { saveAs } from 'file-saver';
 import { SendLogMessage } from '../types/backgroundMessage';
 import Scheduler from './scheduler';
+// import Convert from './convert';
 
 // 获取小说标题
 const getTitle = (): any => {
@@ -90,7 +91,7 @@ const getNovelContentByUrl = async (url: string) => {
 // txt下载
 const fileSave = (text: string, title: string) => {
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-  saveAs(blob, `${title}.txt`);
+  saveAs(blob, `${title}.md`);
 };
 
 const downloadNovel = () => {
@@ -136,9 +137,9 @@ const downloadNovel = () => {
     scheduler.execute().then((contents) => {
       clearInterval(timerId);
 
-      const text = `${title}\n\n${meta}\n${intro}\n\n${contents
+      const text = `# ${title}\n\n${meta}\n${intro}\n\n${contents
         .map((content, index) => {
-          return `${chapterList[index].title}\n${content}`;
+          return `## ${chapterList[index].title}\n${content}`;
         })
         .join('\n\n')}`;
 
