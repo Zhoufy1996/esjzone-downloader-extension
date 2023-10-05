@@ -1,7 +1,7 @@
 import { saveAs } from 'file-saver';
 import { SendLogMessage } from '../types/backgroundMessage';
 import Scheduler from './scheduler';
-import Convert from './convert';
+// import Convert from './convert';
 
 // 获取小说标题
 const getTitle = (): any => {
@@ -73,8 +73,9 @@ const getDocument = async (url: string) => {
 // 获取某章节的内容
 const getDocumentNovelContent = (doc: Document) => {
   const content = (doc.querySelector('.forum-content') as HTMLElement)?.innerText;
-  const convert = new Convert();
-  return convert.convert(content);
+  // const convert = new Convert();
+  // return convert.convert(content);
+  return content || '';
 };
 
 // 根据章节链接获取内容
