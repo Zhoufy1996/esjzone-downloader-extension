@@ -2564,12 +2564,25 @@ class Convert {
 
   ft = new FlashText();
 
-  t2s(text) {
+  t2s(text:string, options?: "t2s"|"s2t") {
     const { TS, ft } = this;
-    Object.entries(TS).forEach(([key, value]) => {
-      ft.addKeyWord(key, value);
-    });
-    return ft.replaceKeyWords(text);
+    switch (options) {
+      case "t2s":
+        Object.entries(TS).forEach(([key, value]) => {
+          ft.addKeyWord(key, value);
+        });
+        return ft.replaceKeyWords(text);
+      case "s2t":
+        Object.entries(TS).forEach(([key, value]) => {
+          ft.addKeyWord(value, key);
+        });
+        return ft.replaceKeyWords(text);
+      default :
+        Object.entries(TS).forEach(([key, value]) => {
+          ft.addKeyWord(key, value);
+        });
+        return ft.replaceKeyWords(text);
+    }
   }
 };
 

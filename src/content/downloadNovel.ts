@@ -120,7 +120,7 @@ const downloadNovel = () => {
       message: '正在获取章节内容...',
     });
 
-    const childChapterList = chapterList.filter((item) => item.url != null);
+    const childChapterList = chapterList.filter((item: any) => item.url != null);
     const scheduler = new Scheduler(
       childChapterList.map((item) => {
         return () => getNovelContentByUrl((item.url as string) || '');
