@@ -2564,7 +2564,11 @@ class Convert {
 
   ft = new FlashText();
 
-  t2s(text:string, options?: "t2s"|"s2t") {
+  convert(text:string, options?: "t2s"|"s2t") {
+    /**
+     * @t2s 繁体转简体
+     * @s2t 简体转繁体
+     */
     const { TS, ft } = this;
     switch (options) {
       case "t2s":

@@ -76,7 +76,7 @@ const getDocument = async (url: string) => {
 const getDocumentNovelContent = (doc: Document) => {
   const content = (doc.querySelector('.forum-content') as HTMLElement)?.innerText;
   if (content) {
-    return convert.t2s(content);
+    return convert.convert(content);
   }
   return '';
 };
