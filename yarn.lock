@@ -3382,10 +3382,10 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
-flashtext.js@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.npmjs.org/flashtext.js/-/flashtext.js-1.0.5.tgz"
-  integrity sha512-CKJ81wwqTQRawc+t7V1sirUssb9/I9n461cOxTqqPq/nrmeVNtwyeOp7pU85DtuSDmfMepQrF3zvXGxd5a5DVQ==
+flashtext2js@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/flashtext2js/-/flashtext2js-1.0.1.tgz"
+  integrity sha512-yMqMI48tLwkbLKSJRarQvn+SWYn8xf0FU1a8sRPei+ZI6X258Qqp3PglNFUIQVIZ96Goh70iXH3TVLjACbuGHg==
 
 flat-cache@^3.0.4:
   version "3.0.4"

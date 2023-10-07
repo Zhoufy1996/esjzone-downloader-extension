@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
 // 转换字库来自 https://github.com/foru17/chinese-s2t
 
-import { KeywordProcessor } from 'flashtext.js';
+import FlashText from "flashtext2js";
 
 class Convert {
-  TS: Record<string, string> = {
+  TS:Record<string, string> = {
     "萬": "万",
     "與": "与",
     "醜": "丑",
@@ -2558,16 +2558,18 @@ class Convert {
     // "盡": "尽",
     // "髒": "脏",
     "拼": "拼",
+    "儘": "尽",
+
   };
 
-  processor = new KeywordProcessor();
+  ft = new FlashText();
 
-  convert(text: string): string {
-    const { TS, processor } = this;
+  t2s(text) {
+    const { TS, ft } = this;
     Object.entries(TS).forEach(([key, value]) => {
-      processor.addKeyword(key, value);
+      ft.addKeyWord(key, value);
     });
-    return processor.process(text);
+    return ft.replaceKeyWords(text);
   }
 };
 
