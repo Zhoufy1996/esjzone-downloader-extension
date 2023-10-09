@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 // 转换字库来自 https://github.com/foru17/chinese-s2t, 位于 `src/content/json/convert.json`
 
-import FlashText from "flashtext2js";
-import TS from "./json/convert.json";
+import FlashText from 'flashtext2js';
+import TS from './json/convert.json';
 
 class Convert {
   ft = new FlashText();

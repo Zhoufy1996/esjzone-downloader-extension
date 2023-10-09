@@ -66,9 +66,9 @@ const getDocument = async (url: string) => {
   const response = await fetch(url);
   const body = await response.text();
 
-  const domparser = new DOMParser();
+  const domParser = new DOMParser();
 
-  const doc = domparser.parseFromString(body, 'text/html');
+  const doc = domParser.parseFromString(body, 'text/html');
   return doc;
 };
 
