@@ -34,59 +34,50 @@ interface Chapter {
 const getChapterList = (): Chapter[] => {
   const chapterListNode = document.querySelector('#chapterList');
   const childNodes = chapterListNode?.children;
+  const chapters: Chapter[] = [];
   if (childNodes) {
-    const chapters: Chapter[] = Array.from(childNodes).map((node: Element) => {
+    Array.from(childNodes).forEach((node: Element) => {
       if (node.tagName.toLowerCase() === 'a') {
-        return {
+        chapters.push({
           title: node.getAttribute('data-title') || '',
           url: (node as HTMLAnchorElement).href,
-        };
-      }
-
-      if (node.tagName.toLowerCase() === 'p') {
-        return {
-          title: node.querySelector('span')?.textContent || '',
-          url: '',
-        };
-      }
-
-      if (node.tagName.toLowerCase() === 'details') {
-        Array.from(node.children).map((item: Element) => {
-          if (item.tagName.toLowerCase() === 'a') {
-            return {
-              title: item.getAttribute('data-title') || '',
-              url: (item as HTMLAnchorElement).href,
-            };
-          }
-
-          if (item.tagName.toLowerCase() === 'p') {
-            return {
-              title: item.querySelector('span')?.textContent || '',
-              url: '',
-            };
-          }
-
-          if (item.tagName.toLowerCase() === 'summary') {
-            return {
-              title: item.textContent || '',
-              url: '',
-            };
-          }
-
-          return {
-            title: '',
-          };
         });
       }
 
-      return {
-        title: '',
-      };
-    });
+      if (node.tagName.toLowerCase() === 'p') {
+        chapters.push({
+          title: node.querySelector('span')?.textContent || '',
+          url: '',
+        });
+      }
 
-    return chapters;
+      if (node.tagName.toLowerCase() === 'details') {
+        Array.from(node?.children).forEach((item: Element) => {
+          if (item.tagName.toLowerCase() === 'summary') {
+            chapters.push({
+              title: item.textContent || '',
+              url: '',
+            });
+          }
+
+          if (item.tagName.toLowerCase() === 'a') {
+            chapters.push({
+              title: item.getAttribute('data-title') || '',
+              url: (item as HTMLAnchorElement).href,
+            });
+          }
+
+          if (item.tagName.toLowerCase() === 'p') {
+            chapters.push({
+              title: item.querySelector('span')?.textContent || '',
+              url: '',
+            });
+          }
+        });
+      }
+    });
   }
-  return [];
+  return chapters;
 };
 
 // get 方法请求地址，将内容转换成 document
@@ -148,7 +139,7 @@ const downloadNovel = () => {
       message: '正在获取章节内容...',
     });
 
-    const childChapterList = chapterList.filter((item: any) => item.url != null);
+    const childChapterList = chapterList.filter((item: Chapter) => item.url !== '');
     const scheduler = new Scheduler(
       childChapterList.map((item) => {
         return () => getNovelContentByUrl((item.url as string) || '');
