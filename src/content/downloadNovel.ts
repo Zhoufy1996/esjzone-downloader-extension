@@ -31,11 +31,11 @@ interface Chapter {
 }
 
 // 获取所有章节名和阅读链接
-const getChapterList = (): any => {
+const getChapterList = (): Chapter[] => {
   const chapterListNode = document.querySelector('#chapterList');
   const childNodes = chapterListNode?.children;
   if (childNodes) {
-    const chapters: Chapter[] = Array.from(childNodes).map((node) => {
+    const chapters: Chapter[] = Array.from(childNodes).map((node: Element) => {
       if (node.tagName.toLowerCase() === 'a') {
         return {
           title: node.getAttribute('data-title') || '',
@@ -44,11 +44,39 @@ const getChapterList = (): any => {
       }
 
       if (node.tagName.toLowerCase() === 'p') {
-        const text = node.querySelector('span')?.textContent;
         return {
-          title: text || '',
+          title: node.querySelector('span')?.textContent || '',
           url: '',
         };
+      }
+
+      if (node.tagName.toLowerCase() === 'details') {
+        Array.from(node.children).map((item: Element) => {
+          if (item.tagName.toLowerCase() === 'a') {
+            return {
+              title: item.getAttribute('data-title') || '',
+              url: (item as HTMLAnchorElement).href,
+            };
+          }
+
+          if (item.tagName.toLowerCase() === 'p') {
+            return {
+              title: item.querySelector('span')?.textContent || '',
+              url: '',
+            };
+          }
+
+          if (item.tagName.toLowerCase() === 'summary') {
+            return {
+              title: item.textContent || '',
+              url: '',
+            };
+          }
+
+          return {
+            title: '',
+          };
+        });
       }
 
       return {
