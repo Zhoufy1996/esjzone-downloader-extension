@@ -6,12 +6,12 @@ import Convert from './convert';
 const convert = new Convert();
 
 // 获取小说标题
-const getTitle = (): any => {
+const getTitle = (): string | null | undefined => {
   return document.querySelector('h2')?.textContent;
 };
 
 // 获取小说简介
-const getIntro = (): any => {
+const getIntro = (): string | null | undefined => {
   return document.querySelector('#details')?.textContent;
 };
 
@@ -20,7 +20,7 @@ const getMeta = (): string => {
   const metalist: string[] = [];
 
   document.querySelectorAll('.list-unstyled li:not(.hidden-md-up)').forEach((node) => {
-    metalist.push(node.textContent || '');
+    metalist.push((node as HTMLElement)?.innerText || '');
   });
   return metalist.join('\n');
 };
