@@ -1,18 +1,47 @@
 import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 import { SendLogMessage } from '../types/backgroundMessage';
 import Scheduler from './scheduler';
 import Convert from './convert';
 
 const convert = new Convert();
 
+// 获取小说封面
+interface Cover {
+  url: string;
+  type: string;
+}
+
+const getCover = (): Cover => {
+  const coverNode = document.querySelector('.product-gallery')?.children[0];
+  if (coverNode?.tagName.toLowerCase() === 'a') {
+    return {
+      url: coverNode.getAttribute('href') || '',
+      type: coverNode.getAttribute('href')?.split('.').pop() as string,
+    };
+  }
+  return {
+    url: '',
+    type: '',
+  };
+};
+
+// const downloadCover = async (cover: Cover) => {
+//   if (cover.url) {
+//     const response = await fetch(cover.url);
+//     const blob = await response.blob();
+//     saveAs(blob, `cover.${cover.type}`);
+//   }
+// };
+
 // 获取小说标题
-const getTitle = (): any => {
-  return document.querySelector('h2')?.textContent;
+const getTitle = (): string => {
+  return (document.querySelector('h2') as HTMLElement)?.innerText || '';
 };
 
 // 获取小说简介
-const getIntro = (): any => {
-  return document.querySelector('#details')?.textContent;
+const getIntro = (): string => {
+  return (document.querySelector('#details') as HTMLElement)?.innerText || '';
 };
 
 // 获取小说元数据
@@ -20,7 +49,7 @@ const getMeta = (): string => {
   const metalist: string[] = [];
 
   document.querySelectorAll('.list-unstyled li:not(.hidden-md-up)').forEach((node) => {
-    metalist.push(node.textContent || '');
+    metalist.push((node as HTMLElement)?.innerText || '');
   });
   return metalist.join('\n');
 };
@@ -112,10 +141,27 @@ const getNovelContentByUrl = async (url: string) => {
 };
 
 // txt下载
-const fileSave = (text: string, title: string) => {
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-  saveAs(blob, `${title}.txt`);
+const zipSave = async (text: string, title: string, cover: Cover) => {
+  const zip = new JSZip();
+  const folder = zip.folder(title);
+
+  if (cover.url) {
+    const response = await fetch(cover?.url);
+    const blob = await response.blob();
+
+    folder?.file(`cover.${cover.type}`, blob);
+  }
+
+  folder?.file(`${title}.txt`, text);
+  zip.generateAsync({ type: 'blob' }).then((content) => {
+    saveAs(content, `${title}.zip`);
+  });
 };
+
+// const fileSave = (text: string, title: string) => {
+//   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+//   saveAs(blob, `${title}.txt`);
+// };
 
 const downloadNovel = () => {
   return new Promise((resolve) => {
@@ -124,6 +170,7 @@ const downloadNovel = () => {
       message: '正在解析页面信息...',
     });
 
+    const cover = getCover();
     const title = getTitle();
     const intro = getIntro();
     const meta = getMeta();
@@ -166,7 +213,9 @@ const downloadNovel = () => {
         })
         .join('\n\n')}`;
 
-      fileSave(text, title as string);
+      // fileSave(text, title as string);
+
+      zipSave(text, title as string, cover);
 
       chrome.runtime.sendMessage<SendLogMessage>({
         type: 'SEND_LOG_MESSAGE',
@@ -174,6 +223,7 @@ const downloadNovel = () => {
       });
 
       resolve({
+        cover,
         title,
         meta,
         intro,
