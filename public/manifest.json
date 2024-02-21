@@ -1,27 +1,29 @@
 {
-    "name": "esjzone小说下载器",
-    "description": "轻松下载esjzone小说至本地",
-    "version": "0.0.1",
-    "manifest_version": 3,
-    "icons": {
-        "16": "logo192.png",
-        "48": "logo192.png",
-        "128": "logo512.png"
-    },
-    "permissions": ["activeTab", "contextMenus"],
-    "action": {
-        "default_popup": "popup.html",
-        "default_title": "esjzone-downloader"
-    },
-    "content_scripts": [
-        {
-            "matches": ["https://www.esjzone.net/*"],
-            "js": ["./static/js/content.bundle.js"],
-
-            "run_at": "document_idle"
-        }
-    ],
-    "background": {
-        "service_worker": "./static/js/background.bundle.js"
+  "name": "esjzone小说下载器",
+  "description": "轻松下载esjzone小说至本地",
+  "version": "0.0.2",
+  "manifest_version": 3,
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo512.png"
+  },
+  "permissions": ["activeTab", "contextMenus"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "esjzone-downloader"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.esjzone.cc/*",
+        "https://www.esjzone.me/*"
+      ],
+      "js": ["./static/js/content.bundle.js"],
+      "run_at": "document_idle"
     }
+  ],
+  "background": {
+    "service_worker": "./static/js/background.bundle.js"
+  }
 }

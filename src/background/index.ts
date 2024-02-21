@@ -30,9 +30,9 @@ chrome.runtime.onMessage.addListener((msg: BackgroundMessage, sender, sendRespon
 chrome.contextMenus.create({
   id: 'download-esjzone',
   type: 'normal',
-  title: 'esjzone当前页面小说下载',
+  title: 'esjzone 当前页面小说下载',
   contexts: ['page'],
-  documentUrlPatterns: [documentUrlPattern],
+  documentUrlPatterns: [documentUrlPattern.toString()],
 });
 
 chrome.contextMenus.onClicked.addListener((info) => {
